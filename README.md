@@ -58,6 +58,17 @@ name = expression;
 name:type;
 ```
 
+In variant with `name = expression;` this can be initialization of variable if this var didn't initialized before. So, variant
+``` littlebird 
+a=1;
+```
+is the same as
+``` littlebird 
+a:int;
+a=1;
+```
+And the first option is more desirable
+
 LittleBird supports the following standard types:
 
 - `int` 1
@@ -88,7 +99,9 @@ namespace.class.name(params);
 var.name(params);
 ```
 
-Control flow statements and functions that have a `{}` after their declaration can also be written without `{}` and with `:` after their declaration (don't write `:` after functiin initialization and else):
+In function we can use `=>` to return value from this function (in other languages often use `return`)
+
+Control flow statements and functions that have a `{}` after their declaration can also be written without `{}` and with `:` after their declaration (don't write `:` after function initialization and else):
 
 ```littlebird
 i from 0 to 10:
@@ -185,6 +198,13 @@ i from 0 until 10 do i.Do()//equivalent to for(int i = 0; i<10; i.Do())
 ```
 
 These keywords can be combined to create complex loop structures that are still easy to read and understand.
+
+## Extra keyword
+
+`->;` used to skip one repetition in a cycle (in other language often used `continue`)
+
+`<-;` is used to exit the cycle (in other language often used `break`)
+
 
 ## Pointers
 
