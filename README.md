@@ -1,3 +1,4 @@
+
 # LittleBird Documentation
 
 ## Table of Contents
@@ -10,6 +11,7 @@
 6. [Pointers](#Pointers)
 7. [Arrays](#Arrays)
 8. [Object-Oriented Programming](#Object-Oriented-Programming)
+9. [Advanced Features of LittleBird](Advanced-Features-of-LittleBird)
 
 ## Introduction
 
@@ -318,8 +320,8 @@ class ClassName signed IInterface1 IInterface2:
 
 Different types of methods are declared with special symbols in LittleBird:
 
-- `:` is used for constructors.
-- `~` is used for destructors.
+- `=>` is used for constructors.
+- `<=` is used for destructors.
 - `@MethodName` is used for abstract methods.
 - `#MethodName` is used for virtual methods.
 - `*MethodName` is used to override methods.
@@ -328,8 +330,8 @@ Different types of methods are declared with special symbols in LittleBird:
 For instance, a constructor for a class `ClassName` can be declared and called as follows:
 
 ```littlebird
-: (params): //code // constructor declaration
-:ClassName(params) // constructor call
+=> ClassName: // constructor declaration
+:ClassName() // constructor call
 ```
 
 ### Access Modifiers
@@ -347,3 +349,103 @@ Access modifiers in LittleBird are determined based on naming conventions:
 
 - Static members are denoted by prefixing the member name with a `|` character: `|MemberName`.
 - Constant members are denoted by prefixing the member name with an `=` character: `=MemberName`.
+
+## Advanced Features of LittleBird
+
+### Namespaces as Variables
+
+Namespaces in LittleBird can be treated like variables. You can assign namespaces to variables and manipulate them as you would with any other variable:
+
+```littlebird
+i = get(<namespace>); // Assigns the value of <namespace> to variable i.
+
+i = :namespace; // Assigns a new empty namespace to i.
+```
+
+### Adding Elements to Namespaces
+
+LittleBird provides several ways to add elements to namespaces:
+
+```littlebird
+i => Func(string,int); // Adds a function with parameters of type string and int to namespace i.
+
+i => a; // Adds variable a to namespace i. If a is a namespace, a becomes a nested namespace of i.
+
+i => :Class; // Adds a new class to namespace i.
+```
+
+### Modifying Namespace Elements
+
+You can also modify the elements of a namespace:
+
+```littlebird
+i.Func()=Func2(); // Changes function Func to function Func2.
+
+i.a = 42; // Changes the value of variable a to 42 within namespace i.
+```
+
+### Namespace Elements Retrieval
+
+The elements within a namespace can be retrieved as an array of strings:
+
+```littlebird
+i:[Functions|Classes|Namespaces|Variables] // Returns an array of all corresponding elements.
+```
+
+### Commenting Namespace Elements
+
+LittleBird allows you to add comments to the elements of a namespace:
+
+```littlebird
+i.name:comment = "This is a comment."; // Adds a comment to the element 'name' in namespace i.
+```
+
+### Scoped Keyword
+
+The `scoped` keyword is used to automatically delete a pointer when it goes out of scope:
+
+```littlebird
+scoped a = <b>; // The pointer a will be automatically deleted when it goes out of scope.
+```
+
+### Dynamic Type
+
+LittleBird supports a dynamic type, which can hold values of any type:
+
+```littlebird
+a:dynamic; // The variable a can now hold values of any type.
+```
+
+### Generics
+
+Generic classes and functions can be created and used as follows:
+
+```littlebird
+class Gen <T> {} // A generic class definition.
+
+a:Gen<int>  // A variable of type Gen<int>.
+
+Func<T> (){} // A generic function definition.
+
+Func<int>(); // A function call with int as the generic type.
+```
+
+### Overloading Operators
+
+You can overload operators for custom classes:
+
+```littlebird
+operator + binary (a:Class1, b:Class2){} // Overloads the + operator for instances of Class1 and Class2.
+
+operator ++ left (a:Class1, b:Class2){} // Overloads the ++ operator for instances of Class1 and Class2.
+```
+
+### Type Conversion
+
+You can define type conversions for your custom classes:
+
+```littlebird
+Class1 to {/*Some code that return Class2*/} // Defines a conversion from Class1 to Class2.
+```
+
+Please note that type conversions must return a value and cannot be void.
