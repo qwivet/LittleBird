@@ -1,7 +1,3 @@
----
-title: LittleBird
----
-
 # LittleBird Documentation
 
 ## Table of Contents
@@ -322,8 +318,8 @@ class ClassName signed IInterface1 IInterface2:
 
 Different types of methods are declared with special symbols in LittleBird:
 
-- `=>` is used for constructors.
-- `<=` is used for destructors.
+- `:` is used for constructors.
+- `~` is used for destructors.
 - `@MethodName` is used for abstract methods.
 - `#MethodName` is used for virtual methods.
 - `*MethodName` is used to override methods.
@@ -332,8 +328,8 @@ Different types of methods are declared with special symbols in LittleBird:
 For instance, a constructor for a class `ClassName` can be declared and called as follows:
 
 ```littlebird
-=> ClassName: // constructor declaration
-:ClassName() // constructor call
+: (params): //code // constructor declaration
+:ClassName(params) // constructor call
 ```
 
 ### Access Modifiers
