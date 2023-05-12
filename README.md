@@ -13,6 +13,7 @@ title: LittleBird
 5. [Control Flow Statements](#Control-Flow-Statements)
 6. [Pointers](#Pointers)
 7. [Arrays](#Arrays)
+8. [Object-Oriented Programming](#Object-Oriented-Programming)
 
 ## Introduction
 
@@ -237,3 +238,116 @@ a:[int]; // Declare an array of ints with no specified size
 
 a = [1,4,8,8]; // Declare and initialize an array with specified values
 ```
+## Object-Oriented Programming
+
+### Class Definitions
+
+In LittleBird, class definitions start with the keyword `class` followed by the class name:
+
+```littlebird
+class ClassName:
+```
+
+### Abstract Classes
+
+Abstract classes are declared using the `abstract` keyword:
+
+```littlebird
+abstract ClassName:
+```
+
+### Sealed Classes
+
+Sealed classes are declared using the `sealed` keyword:
+
+```littlebird
+sealed ClassName:
+```
+
+### Static Classes
+
+Static classes are declared by prefixing the class name with a `|` character:
+
+```littlebird
+class |ClassName:
+```
+
+### Nested Classes
+
+Classes can be nested within other classes. The nested class is declared as an `offspring` of the parent class:
+
+```littlebird
+ClassName1 offspring ClassName2:
+```
+
+### Interfaces
+
+Interfaces are declared with the `contract` keyword:
+
+```littlebird
+contract IName:
+```
+
+### Structs
+
+Structs are declared with the `data` keyword:
+
+```littlebird
+data StructName:
+```
+
+### Main Method
+
+The entry point of a LittleBird program is declared with the `main:` keyword.
+
+### Inheritance
+
+Inheritance is defined by using the `class` keyword between the subclass and the superclass names:
+
+```littlebird
+SubclassName class SuperclassName:
+```
+
+This syntax can also be used with `abstract` and `sealed` classes.
+
+### Implementing Interfaces
+
+Classes implement interfaces using the `signed` keyword:
+
+```littlebird
+class ClassName signed IInterface1 IInterface2:
+```
+
+### Methods
+
+Different types of methods are declared with special symbols in LittleBird:
+
+- `=>` is used for constructors.
+- `<=` is used for destructors.
+- `@MethodName` is used for abstract methods.
+- `#MethodName` is used for virtual methods.
+- `*MethodName` is used to override methods.
+- `:MethodName` is used for new methods.
+
+For instance, a constructor for a class `ClassName` can be declared and called as follows:
+
+```littlebird
+=> ClassName: // constructor declaration
+:ClassName() // constructor call
+```
+
+### Access Modifiers
+
+Access modifiers in LittleBird are determined based on naming conventions:
+
+- `Name` - public
+- `_Name` - private
+- `_name` - protected
+- `name` - internal
+- `-name` - private protected
+- `-Name` - internal protected
+
+### Static and Constant Members
+
+- Static members are denoted by prefixing the member name with a `|` character: `|MemberName`.
+- Constant members are denoted by prefixing the member name with an `=` character: `=MemberName`.
