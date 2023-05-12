@@ -342,8 +342,8 @@ Access modifiers in LittleBird are determined based on naming conventions:
 - `_Name` - private
 - `_name` - protected
 - `name` - internal
-- `-name` - private protected
-- `-Name` - internal protected
+- `^name` - private protected
+- `^Name` - internal protected
 
 ### Static and Constant Members
 
