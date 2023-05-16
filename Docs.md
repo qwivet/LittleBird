@@ -1,4 +1,5 @@
 
+
 # LittleBird Programming Language Documentation
 
   
@@ -637,8 +638,6 @@ In addition to these variations of the while loop, LittleBird also provides two 
 
 -  `<-;` is used to break out of a loop. This is equivalent to the `break` statement in other languages.
 
-  
-
 Here's an example that uses both of these keywords:
 
   
@@ -657,6 +656,75 @@ while i < 10
   
 
 In this example, when `i` equals 5, the `->;` keyword will cause the loop to skip to the next iteration, so "5" will not be printed. When `i` equals 8, the `<-;` keyword will cause the loop to terminate, so "9" and "10" will not be printed. The output of this code will be "1 2 3 4 6 7 8".
+
+### Switch Statement
+
+In LittleBird, a `from` block is used as a switch statement. It checks the variable `i` against a series of values (`value1`, `value2`, etc.), and executes the corresponding block of code if it finds a match. For example:
+
+```littlebird
+from i 
+{ 
+	value1{}, 
+	value2{} 
+} 
+```
+
+is analogue of 
+
+```csharp
+switch(i) 
+{ 
+	case value1:
+	break; 
+	case value2:
+	break; 
+}
+```
+
+### Foreach Loop
+
+In LittleBird, a `from` loop can also be used as a foreach loop. `i from j` loops over each item in `j`, and the corresponding block of code modifies the item. For exaple:
+
+```littlebird
+i from j:
+	i++; 
+```
+
+is analogue of 
+
+```csharp
+foreach (var i in j)
+	i++;
+```
+# Error handling
+
+In LittleBird, error handling is done using the symbols `!=>` and `=>`. The `!=>` block is equivalent to the `try` block in traditional languages, where you place the code that might throw an error. The `=>` block is equivalent to the `catch` block, where you handle the error. The second `=>` block is equivalent to the `finally` block, where you put code that should run regardless of whether an error occurred.
+
+To throw an error, you can use `!=> :Exception;`, which is analogous to `throw new Exception();` in other languages.
+
+Example:
+```littlebird
+{ }!=> { }=> { }
+{ }(x:Exception)!=> { }=> { }
+```
+
+is analogue of 
+
+```csharp
+try {} catch {} finally {}
+try {} catch (Exception x) {} finally {}
+```
+and
+```littlebird
+!=>:Exception;
+```
+
+is analogue of 
+
+```csharp
+throw new Exception();
+```
+# Asyncronus
 
 # Functions
 
@@ -780,6 +848,65 @@ While generic functions are powerful and flexible, there are some restrictions o
 4. You cannot use the `typeof` operator with `T` within a generic function, because `T` is not a specific type but a placeholder.
 
 Despite these restrictions, generic functions can significantly improve the flexibility and reusability of your code, allowing you to write more efficient and maintainable programs.
+
+## Function pointer and event
+
+The LittleBird programming language introduces a special way to use function pointers as variables, utilizing two distinct types: `Func` and `Action`. 
+
+`Func` is a type that represents a function with a return type and any number of parameters. The first parameter in the `Func` type declaration represents the output or return type, and the rest represent the input parameters of the function. For instance, `i:Func<int, int>;` declares a function variable `i` that takes an integer as a parameter and returns an integer.
+
+`Action`, on the other hand, represents a method that has no return type (void) and takes any number of parameters. All parameters in the `Action` declaration are input parameters. For example, `j:Action<int>;` declares an action variable `j` that takes an integer as a parameter and doesn't return a value.
+
+These variables can be used like regular functions. For example, `a = i(5);` calls the function pointed by `i` with `5` as the argument, and `j(6);` calls the action pointed by `j` with `6` as the argument.
+
+Furthermore, LittleBird introduces an `event` type. An `event` can hold multiple function pointers (that should have a void return type), and when the event is triggered, all the associated functions are called. You can add functions to an event with the `=>` operator, and trigger the event by calling it like a function. For instance:
+
+```littlebird
+e:event<int>; // declare an event e that takes an integer as a parameter
+e=>j; // add the action j to the event e
+e=>printNum(i:int) Write(i); // add another action to the event e
+e(5); // trigger the event e with 5 as the parameter
+```
+
+In this example, when `e(5);` is called, both `j(5);` and `printNum(5);` are called, in the order they were added to the event.
+
+Certainly! Here's how the chapter on async might look like in the LittleBird Interactive (LiBi) programming language documentation:
+
+---
+
+### Asynchronous Programming
+
+LittleBird Interactive (LiBi) supports asynchronous programming through the use of `promise` types and automatic async functionality. This allows you to write code that can perform tasks in the background, making your applications more efficient and responsive.
+
+#### Promise Types
+
+In LiBi, a function that performs an asynchronous operation returns a `promise` of a certain type. This is declared using the syntax `promise<type>`. For instance, a function that asynchronously retrieves an integer would be declared as `promise<int>`. 
+
+A `promise` has a `.state` property, which can have one of the following values:
+
+- `0`: The asynchronous operation is not yet completed.
+- `1`: The asynchronous operation has completed successfully.
+- `2`: The asynchronous operation has failed.
+
+#### Automatic Async
+
+In LiBi, any function that returns a `promise` is automatically considered to be asynchronous. This means that you don't have to explicitly use an `async` keyword to declare such functions, unlike in some other programming languages. This makes writing asynchronous code more straightforward and less error-prone.
+
+#### Return Syntax
+
+LiBi uses the `=>` operator to return a result from a function. This concise syntax makes your code easier to read and write. 
+
+Here's an example of how you can write an asynchronous function in LiBi:
+
+```littlebird
+myFunction()
+{
+    result = someOtherAsyncFunction();
+    => result;
+}
+```
+
+In this example, `myFunction()` is automatically asynchronous because it returns the result of `someOtherAsyncFunction()`, which is a `promise`. The state of this `promise` can be checked using the `.state` property.
 
 ## Classes and Objects
 
@@ -1082,3 +1209,227 @@ Class1 to { /*Some code that return Class2*/ } // Defines a conversion from Clas
 In this code, a conversion is defined from `Class1` to `Class2`. The code block should contain the logic for converting an instance of `Class1` to an instance of `Class2`.
 
 This concludes our discussion on classes and objects in LittleBird. With this knowledge, you should have a good understanding of how to define classes, create objects, and manipulate them using methods, properties, and operators. As always, practice is key to mastering these concepts, so try to write as much code as you can. Happy coding!
+
+# Default libraries
+## Short description
+
+- **console**: Functions for control of console
+    
+-  **system**: Low-level system functions, such as accessing environment variables, handling signals, or interacting with the operating system.
+    
+-  **system.file**: Functions for file I/O, such as reading and writing files, and manipulating file paths.
+
+- **math**: Basic mathematical functions and constants, such as trigonometric functions, logarithms, exponentiation, square roots, and mathematical constants like pi and e.
+    
+- **science**: Scientific computing functions, such as linear algebra operations, statistical functions, and possibly numerical calculus functions.
+    
+- **http**: Functions for making HTTP requests, such as GET, POST, DELETE, etc.
+    
+-  **web**: A broader web development library, possibly including functions for generating HTML, handling websockets, or server-side programming.
+
+-  **structures**: Common data structures, such as lists, stacks, queues, trees, and hash maps.
+    
+-  **json**: Functions for parsing and generating JSON data.
+    
+- **thread**: Functions for multithreading and concurrency, such as creating and joining threads, and synchronizing access to shared resources.
+    
+-  **gui**: Functions for creating graphical user interfaces, such as windows, buttons, text inputs, and handling user interaction.
+    
+-  **test**: Functions for writing and running tests, such as unit tests, integration tests, or property-based tests.
+    
+- **android**: Functions for interacting with Android-specific features, such as accessing the device's sensors, creating notifications, or interacting with the Android lifecycle.
+- ### LogicBox libraries (game engine, currently develope)
+##  console
+    
+-   `Write(text:string)`: Prints the provided string to the console.
+-   `WriteLine(text:string)`: Prints the provided string to the console, followed by a newline character.
+-   `Read():string`: Reads a line of text from the console.
+-   `Read(text:string):string`: Prints the provided string to the console and after it reads a line of text from the console.
+-   `Clear()`: Clears the console screen.
+-   `SetColor(color:Color)`: Sets the color of the text that will be printed to the console.
+## system
+    
+-   `GetEnv(varName:string):string`: Returns the value of the environment variable with the given name.
+-   `SetEnv(varName:string, value:string)`: Sets the value of the environment variable with the given name.
+-   `Exit(code:int)`: Exits the program with the given exit code.
+-   `Execute(command:string):string`: Executes the given command in the system shell and returns the output.
+-   `Sleep(duration:int)`: Pauses execution of the current thread for the given duration (in milliseconds).
+## system.file
+    
+-   `ReadFile(path:string):string`: Reads the contents of the file at the given path.
+-   `WriteFile(path:string, content:string)`: Writes the given content to the file at the given path.
+-   `AppendToFile(path:string, content:string)`: Appends the given content to the file at the given path.
+-   `DeleteFile(path:string)`: Deletes the file at the given path.
+-   `FileExists(path:string):bool`: Returns `true` if a file exists at the given path, `false` otherwise.
+-   `CreateDirectory(path:string)`: Creates a new directory at the given path.
+-   `DeleteDirectory(path:string)`: Deletes the directory at the given path.
+-   `DirectoryExists(path:string):bool`: Returns `true` if a directory exists at the given path, `false` otherwise.
+-   `GetFiles(directory:string):array<string>`: Returns an array of the names of all files in the given directory.
+-   `GetDirectories(directory:string):array<string>`: Returns an array of the names of all subdirectories in the given directory.
+
+Certainly! Here are potential functions for these libraries in LittleBird:
+
+## math
+
+- `Power(x:double, y:double):double`: Returns x raised to the power y.
+- `Sqrt(x:double):double`: Returns the square root of x.
+- `Abs(x:double):double`: Returns the absolute value of x.
+- `Sin(x:double):double`: Returns the sine of x.
+- `Cos(x:double):double`: Returns the cosine of x.
+- `Tan(x:double):double`: Returns the tangent of x.
+- `Asin(x:double):double`: Returns the arcsine of x.
+- `Acos(x:double):double`: Returns the arccosine of x.
+- `Atan(x:double):double`: Returns the arctangent of x.
+- `Log(x:double):double`: Returns the natural logarithm of x.
+- `Exp(x:double):double`: Returns e raised to the power x.
+- `Pi:double`: A constant representing the ratio of the circumference of a circle to its diameter.
+- `E:double`: A constant representing the base of natural logarithms.
+
+## science
+
+- `DotProduct(v1:array<double>, v2:array<double>):double`: Returns the dot product of two vectors.
+- `CrossProduct(v1:array<double>, v2:array<double>):array<double>`: Returns the cross product of two vectors.
+- `MatrixMultiply(m1:array<array<double>>, m2:array<array<double>>):array<array<double>>`: Multiplies two matrices.
+- `MatrixInverse(m:array<array<double>>):array<array<double>>`: Returns the inverse of a matrix.
+- `Mean(v:array<double>):double`: Returns the mean of a set of values.
+- `Median(v:array<double>):double`: Returns the median of a set of values.
+- `Mode(v:array<double>):double`: Returns the mode of a set of values.
+- `StandardDeviation(v:array<double>):double`: Returns the standard deviation of a set of values.
+- `Derivative(f:Func<double, double>, x:double):double`: Approximates the derivative of a function at a specific point.
+- `Integral(f:Func<double, double>, a:double, b:double):double`: Approximates the integral of a function over a specific interval.
+## http
+    
+-   `Get(url:string):promise<string>`: Makes a GET request to the given URL and returns the response.
+-   `Post(url:string, data:string):promise<string>`: Makes a POST request to the given URL with the given data and returns the response.
+   -   `Put(url:string, data:string):promise<string>`: Makes a PUT request to the given URL with the given data and returns the response.
+   -   `Delete(url:string):promise<string>`: Makes a DELETE request to the given URL and returns the response.
+   -   `Request(url:string, method:string, headers:dict<string,string>, data:string):promise<string>`: Makes a custom HTTP request.
+## web
+    
+-   `CreateElement(tag:string, attributes:dict<string,string>, children:array<Element>):Element`: Creates a new HTML element.
+   -   `Render(element:Element):string`: Renders an HTML element as a string.
+   -   `OpenWebSocket(url:string):WebSocket`: Opens a websocket to the given URL.
+   -   `StartServer(port:int, requestHandler:Func<Request, Response>)`: Starts a web server on the given port.
+## structures
+    
+   -   `List<T>:class`: A generic list class with methods like `Add(item:T)`, `Remove(item:T)`, `Insert(index:int, item:T)`, and `Get(index:int):T`.
+    -   `Stack<T>:class`: A generic stack class with methods like `Push(item:T)`, `Pop():T`, and `Peek():T`.
+    -   `Queue<T>:class`: A generic queue class with methods like `Enqueue(item:T)`, `Dequeue():T`, and `Peek():T`.
+    -   `Tree<T>:class`: A generic tree class with methods like `AddChild(parent:T, child:T)`, `Remove(child:T)`, and `GetChildren(parent:T):List<T>`.
+    -   `Dictionary<K,V>:class`: A generic hash map class with methods like `Add(key:K, value:V)`, `Get(key:K):V`, `Remove(key:K)`, and `ContainsKey(key:K):bool`.
+##   json
+    
+   -   `Parse(jsonString:string):dynamic`: Parses a JSON string into a dynamic object.
+    -   `Stringify(object:dynamic):string`: Converts an object into a JSON string.
+    -   `LoadFromFile(path:string):promise<dynamic>`: Asynchronously reads a JSON file from the given path and parses it into a dynamic object.
+    -   `SaveToFile(path:string, object:dynamic):promise<void>`: Asynchronously writes an object to a file as JSON at the given path.
+    -   `Prettify(jsonString:string):string`: Converts a JSON string into a "pretty" formatted string.
+    -   `Minify(jsonString:string):string`: Converts a JSON string into a "minified" string (no unnecessary whitespace).
+    -   `IsValid(jsonString:string):bool`: Checks if a string is valid JSON.
+## api
+    
+   -   `CreateClient(baseURL:string):APIClient`: Creates a new API client with the given base URL.
+    -   `api:kingdom`: A kingdom representing an API client. It might have attributes like:
+       -   `[Get(endpoint:string)]`: Makes a GET request to the given endpoint and parses the response as JSON.
+        -   `[Post(endpoint:string, data:dynamic)]`: Makes a POST request to the given endpoint with the given JSON data and parses the response.
+        -   `[Put(endpoint:string, data:dynamic)]`: Makes a PUT request to the given endpoint with the given JSON data and parses the response.
+        -   `[Delete(endpoint:string)]`: Makes a DELETE request to the given endpoint.
+       And virtual methods:
+        -   `SetHeader(name:string, value:string)`: Sets a default header for all requests made by the client.
+        -   `RemoveHeader(name:string)`: Removes a default header from the client.
+        -   `SetAuthToken(token:string)`: Sets an authorization token for all requests made by the client.
+
+## gui
+ 
+ -   `Window`: A class representing a window.
+    
+    -   `constructor(title:string, width:int, height:int)`: Creates a new window with the given title and dimensions.
+    -   `Show()`: Shows the window.
+    -   `Close()`: Closes the window.
+    -   `SetTitle(title:string)`: Sets the title of the window.
+    -   `SetSize(width:int, height:int)`: Sets the size of the window.
+    -   `AddElement(element:GUIElement)`: Adds a GUI element to the window.
+    -   `RemoveElement(element:GUIElement)`: Removes a GUI element from the window.
+    -   `OnClose(callback:Action)`: Sets a function to be called when the window is closed.
+-   `Button`: A class representing a button.
+    
+    -   `constructor(label:string)`: Creates a new button with the given label.
+    -   `SetText(label:string)`: Sets the text of the button.
+    -   `OnClick(callback:Action)`: Sets a function to be called when the button is clicked.
+-   `TextInput`: A class representing a text input field.
+    
+    -   `constructor()`: Creates a new text input field.
+    -   `GetText():string`: Returns the current text of the input field.
+    -   `SetText(text:string)`: Sets the text of the input field.
+    -   `OnTextChanged(callback:Action<string>)`: Sets a function to be called when the text of the input field changes.
+-   `Label`: A class representing a label.
+    
+    -   `constructor(text:string)`: Creates a new label with the given text.
+    -   `GetText():string`: Returns the current text of the label.
+    -   `SetText(text:string)`: Sets the text of the label.
+-   `GUIElement`: An abstract base class for all GUI elements.
+    
+-   `Layout`: A class to control the layout of GUI elements.
+    
+    -   `Horizontal()`: Makes the layout horizontal.
+    -   `Vertical()`: Makes the layout vertical.
+-   `App`: An application class.
+    
+    -   `Run()`: Starts the GUI event loop.
+   
+## android
+   
+   -   `Activity`: A class representing an Android activity.
+    
+    -   `constructor()`: Creates a new activity.
+    -   `OnCreate(callback:Action)`: Sets a function to be called when the activity is created.
+    -   `OnStart(callback:Action)`: Sets a function to be called when the activity is started.
+    -   `OnResume(callback:Action)`: Sets a function to be called when the activity is resumed.
+    -   `OnPause(callback:Action)`: Sets a function to be called when the activity is paused.
+    -   `OnStop(callback:Action)`: Sets a function to be called when the activity is stopped.
+    -   `OnDestroy(callback:Action)`: Sets a function to be called when the activity is destroyed.
+    -   `StartActivity(activity:Activity)`: Starts another activity.
+-   `Sensor`: A class representing a sensor on the device.
+    
+    -   `constructor(sensorType:int)`: Creates a new sensor object for the specified sensor type.
+    -   `GetValue():float`: Returns the current value of the sensor.
+    -   `Start()`: Starts collecting data from the sensor.
+    -   `Stop()`: Stops collecting data from the sensor.
+-   `Notification`: A class representing a notification.
+    
+    -   `constructor(title:string, text:string)`: Creates a new notification with the specified title and text.
+    -   `Show()`: Displays the notification.
+    -   `Cancel()`: Cancels the notification.
+-   `Preferences`: A class for storing and retrieving user preferences.
+    
+    -   `constructor(name:string)`: Creates a new preference file with the specified name.
+    -   `GetInt(key:string, defaultValue:int):int`: Retrieves an integer preference.
+    -   `SetInt(key:string, value:int)`: Stores an integer preference.
+    -   `GetString(key:string, defaultValue:string):string`: Retrieves a string preference.
+    -   `SetString(key:string, value:string)`: Stores a string preference.
+-   `BroadcastReceiver`: A class representing a broadcast receiver.
+    
+    -   `constructor()`: Creates a new broadcast receiver.
+    -   `OnReceive(callback:Action<string, Bundle>)`: Sets a function to be called when the broadcast receiver receives an intent.
+## thread
+      
+In LittleBird, you can create a special type known as `thread`. This type allows you to execute functions concurrently, in a separate thread of execution. This is useful for performing tasks that can run independently of each other, which can improve the efficiency and responsiveness of your program.
+
+Here's a simplified breakdown of the concept:
+
+1.  You can declare a variable of type `thread`. For example: `i:thread;`
+2.  You can add functions to a thread, similar to how you add them to an event. However, before adding functions, you need to call the `ZeroSet` method with the function's parameters. This method clears any previously set functions and prepares the thread for a new set of actions. For instance, `i.ZeroSet<int>();` clears the thread `i` and sets it up for functions that take an integer as a parameter.
+3.  You can then add functions to the thread using the `=>` operator. For example, `i=>j(int);` and `i=>k(int);` add the functions `j` and `k` to the thread `i`. Both `j` and `k` should be functions that take an integer as a parameter.
+4.  To start the execution of the thread, you simply call the thread like a function. For example, `j();` starts the thread `j`, which will concurrently execute all the functions added to it.
+5.  If you want to wait for the thread to finish before continuing with the rest of your program, you can use the `Wait` method. For example, `j.Wait();` will pause the execution of your program until the thread `j` has finished executing all its functions.
+6.  If you want to retrieve data from a function executed in a thread, you need to pass a pointer as an argument to the function, and then return the pointer. This is because the function is executed in a separate thread, and any data it produces is not automatically available in the main thread.
+   -   `Mutex`:class: A class representing a mutual exclusion (mutex) lock, with methods like:
+        -   `Lock()`: Locks the mutex. If the mutex is already locked, waits until it is unlocked.
+        -   `Unlock()`: Unlocks the mutex.
+        -   `TryLock():bool`: Tries to lock the mutex. Returns true if successful, false if the mutex is already locked.
+       
+## test
+    
+   -   `AssertEquals(actual:dynamic, expected:dynamic)`: Asserts that two values are equal. If not, throws an assertion error.
+    -   `AssertTrue(condition:bool)`: Asserts that a condition is true. If not, throws an assertion error.
+    -   `RunTests(func:Action<void>)`: Runs a suite of tests defined in the given function.
