@@ -332,7 +332,7 @@ Here, `a` doesn't contain an integer value but rather the memory address where a
 
   
 
-To assign a memory address to a pointer, we use the `<>` operator, which retrieves the memory address of a variable.
+To assign a memory address to a pointer, we use the `><` operator, which retrieves the memory address of a variable.
 
   
 
@@ -343,7 +343,7 @@ For example, if we have an integer variable `b` and we want to store its address
 ```littlebird
 b = 10;
 
-a = <b>; //a:<int>
+a = >b<; //a:<int>
 ```
 
   
@@ -352,12 +352,12 @@ Now, `a` holds the memory address of `b`.
 
   
 
-To get the value stored in the memory location that `a` is pointing to, we use the `><` operator, also known as the dereference operator.
+To get the value stored in the memory location that `a` is pointing to, we use the `<>` operator, also known as the dereference operator.
 
   
 
 ```littlebird
-value = >a<; //value:int
+value = <a>; //value:int
 ```
 
   
