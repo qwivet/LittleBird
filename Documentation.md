@@ -2,7 +2,71 @@
 
 # LittleBird Programming Language Documentation
 
-  
+## Content
+
+-  [Introduction](#introduction) 
+	- [About LittleBird](#about-littlebird) 
+	- [Basic Syntax](#basic-syntax)
+	- [Installing and Setting Up](#installing-and-setting-up)
+- [Understanding Variables and Types](#understanding-variables-and-types)
+	- [Declaring and Initializing Variables](#declaring-and-initializing-variables)
+	- [Primitive Data Types](#primitive-data-types)
+	- [Arrays](#arrays)
+	- [Pointers](#pointers)
+	- [Data Type Conversions](#data-type-conversions)
+	- [Dynamic Types](#dynamic-types)
+	- [Type Checking](#type-checking)
+	- [Type Casting with Dynamic Types](#type-casting-with-dynamic-types)
+	- [Conclusion](#conclusion)
+- [Control Flow and Looping Constructs](#control-flow-and-looping-constructs)
+	- [If-Else Statements](#if-else-statements)
+	- [For Loops](#for-loops)
+	- [While Loops](#while-loops)
+		- [Basic While Loop](#basic-while-loop)
+		- [While Until Loop](#while-until-loop)
+		- [While To Loop](#while-to-loop)
+	- [Control Flow in Loops](#control-flow-in-loops)
+	- [Switch Statement](#switch-statement)
+	- [Foreach Loop](#foreach-loop)
+- [Functions](#functions)
+	- [Declaring Functions](#declaring-functions)
+	- [Calling Functions](#calling-functions)
+	- [Returning Values from Functions](#returning-values-from-functions)
+	- [Generic Functions](#generic-functions)
+		- [Calling Generic Functions](#calling-generic-functions)
+		- [Restrictions on Generic Functions](#restrictions-on-generic-functions)
+	- [Function pointer and event](#function-pointer-and-event)
+- [Error handling](#error-handling)
+- [Asynchronous Programming](#asynchronous-programming)
+	- [Promise Types](#promise-types)
+	- [Automatic Async](#automatic-async)
+	- [Return Syntax](#return-syntax)
+- [Classes and Objects](#classes-and-objects)
+	- [Declaring CLasses](#declaring-classes)
+	- [Abstract and Sealed Classes](#abstract-and-sealed-classes)
+	- [Nested Classes](#nested-classes)
+	- [Interfaces and Structs](#interfaces-and-structs)
+	- [Inheritance and Polymorphism](#inheritance-and-polymorphism)
+	- [Method Overriding and Hiding](#method-overriding-and-hiding)
+	- [Constructors and Destructors](#constructors-and-destructors)
+	- [Access Modifiers](#access-modifiers)
+	- [Usage of Access Modifiers](#usage-of-access-modifiers)
+	- [Special Keywords in LittleBird](#special-keywords-in-littlebird)
+	- [Constructor Usage in LittleBird](#constructor-usage-in-littlebird)
+	- [Static and Constant Members](#static-and-constant-members)
+	- [Generic Classes](#generic-classes)
+	- [Kingdoms and Classes](#kingdoms-and-classes)
+		- [Defining Methods and Variables](#defining-methods-and-variables)
+		- [Creating a Class within a Kingdom](#creating-a-class-within-a-kingdom)
+		- [Special Keywords](#special-keywords)
+- [Namespaces](#namespaces)
+	- [Declaring and Using Namespaces](#declaring-and-using-namespaces)
+	- [Implementing Namespaces](#implementing-namespaces)
+	- [Manipulating Namespaces](#manipulating-namespaces)
+- [Overloading Operators](#overloading-operators)
+- [Type Conversions](#type-conversions)
+### [Go to Libraries](#default-libraries)
+
 
 ## Introduction
 
@@ -626,7 +690,7 @@ In this example, the loop will continue to run until `i` is greater than 10. The
 
   
 
-#### Control Flow in Loops
+### Control Flow in Loops
 
   
 
@@ -696,41 +760,13 @@ is analogue of
 foreach (var i in j)
 	i++;
 ```
-# Error handling
 
-In LittleBird, error handling is done using the symbols `!=>` and `=>`. The `!=>` block is equivalent to the `try` block in traditional languages, where you place the code that might throw an error. The `=>` block is equivalent to the `catch` block, where you handle the error. The second `=>` block is equivalent to the `finally` block, where you put code that should run regardless of whether an error occurred.
 
-To throw an error, you can use `!=> :Exception;`, which is analogous to `throw new Exception();` in other languages.
-
-Example:
-```littlebird
-{ }!=> { }=> { }
-{ }(x:Exception)!=> { }=> { }
-```
-
-is analogue of 
-
-```csharp
-try {} catch {} finally {}
-try {} catch (Exception x) {} finally {}
-```
-and
-```littlebird
-!=>:Exception;
-```
-
-is analogue of 
-
-```csharp
-throw new Exception();
-```
-# Asyncronus
-
-# Functions
+## Functions
 
 Functions in LittleBird are essential components of structured and object-oriented programming. They provide a way to encapsulate reusable pieces of code that can perform a specific task. This chapter will cover how to declare, call, and use functions in LittleBird.
 
-## Declaring Functions
+### Declaring Functions
 
 In LittleBird, functions are declared using their name followed by a list of parameters and their types enclosed in parentheses. The function body is enclosed in braces `{}`:
 
@@ -748,7 +784,7 @@ The `=>` symbol is used to indicate the return of a value from the function. In 
 
 The function parameters are declared in the same way as variables, with their names followed by their type. Multiple parameters are separated by commas.
 
-## Calling Functions
+### Calling Functions
 
 Functions are called using their name followed by a list of arguments enclosed in parentheses:
 
@@ -773,7 +809,7 @@ namespace.name(params);
 namespace.class.name(params);
 ```
 
-## Returning Values from Functions
+### Returning Values from Functions
 
 In LittleBird, functions use the `=>` symbol to return a value:
 
@@ -797,7 +833,7 @@ product = Multiply(4, 2);
 
 This will call the `Multiply` function with the arguments `4` and `2`, and assign the result to the variable `product`.
 
-## Generic Functions
+### Generic Functions
 
 Generic functions in LittleBird, as in many other programming languages, are functions that can operate on variables of different types. These functions are called "generic" because they can be used with many different types of arguments. Generics make it possible to create a function template that can work with any type, as specified by the caller.
 
@@ -835,7 +871,7 @@ Func<int>(1, 2);
 
 In this example, the function `Func` is called with `int` as the actual type for `T`, and the arguments `1` and `2` are passed to the function.
 
-### Restrictions on Generic Functions
+#### Restrictions on Generic Functions
 
 While generic functions are powerful and flexible, there are some restrictions on how they can be used:
 
@@ -849,7 +885,7 @@ While generic functions are powerful and flexible, there are some restrictions o
 
 Despite these restrictions, generic functions can significantly improve the flexibility and reusability of your code, allowing you to write more efficient and maintainable programs.
 
-## Function pointer and event
+### Function pointer and event
 
 The LittleBird programming language introduces a special way to use function pointers as variables, utilizing two distinct types: `Func` and `Action`. 
 
@@ -872,9 +908,35 @@ In this example, when `e(5);` is called, both `j(5);` and `printNum(5);` are cal
 
 Certainly! Here's how the chapter on async might look like in the LittleBird Interactive (LiBi) programming language documentation:
 
----
+## Error handling
 
-### Asynchronous Programming
+In LittleBird, error handling is done using the symbols `!=>` and `=>`. The `!=>` block is equivalent to the `try` block in traditional languages, where you place the code that might throw an error. The `=>` block is equivalent to the `catch` block, where you handle the error. The second `=>` block is equivalent to the `finally` block, where you put code that should run regardless of whether an error occurred.
+
+To throw an error, you can use `!=> :Exception;`, which is analogous to `throw new Exception();` in other languages.
+
+Example:
+```littlebird
+{ }!=> { }=> { }
+{ }(x:Exception)!=> { }=> { }
+```
+
+is analogue of 
+
+```csharp
+try {} catch {} finally {}
+try {} catch (Exception x) {} finally {}
+```
+and
+```littlebird
+!=>:Exception;
+```
+
+is analogue of 
+
+```csharp
+throw new Exception();
+```
+## Asynchronous Programming
 
 LittleBird Interactive (LiBi) supports asynchronous programming through the use of `promise` types and automatic async functionality. This allows you to write code that can perform tasks in the background, making your applications more efficient and responsive.
 
@@ -1099,6 +1161,60 @@ a:Gen<int>;  // Declare a variable of type Gen<int>.
 
 In this code, `a` is an instance of `Gen` that works with `int` values.
 
+Definitely! Here's a chapter on kingdoms, classes, and special keywords for the LittleBird Interactive (LiBi) documentation:
+
+---
+
+### Kingdoms and Classes
+
+In LittleBird Interactive (LiBi), a `kingdom` represents a broad category or module of functionality. The classes within a kingdom provide specific implementations of the functionality that the kingdom represents.
+
+#### Defining Methods and Variables
+
+In a kingdom, all methods and variables must be defined, unless they are abstract or virtual methods, or if the variable has been initialized.
+
+#### Creating a Class within a Kingdom
+
+You can create a class within a kingdom using the following syntax:
+
+```littlebird
+[abstract|sealed] <kingdomName> <className>:
+```
+
+This creates a class `<className>` within the kingdom `<kingdomName>`. The class can be declared as `abstract` or `sealed` depending on the desired behavior.
+
+#### Special Keywords
+
+Kingdoms in LiBi provide several special keywords to provide flexible functionality:
+
+- `collect`: This keyword allows you to get a pointer to an array of all classes within the kingdom.
+- `attach`: This keyword allows you to bind a function to another function within the kingdom, so that when the kingdom's function is called, the attached function is also called.
+- `call`: This keyword allows you to call every instance of a specific function within the kingdom.
+- `avoid`: This keyword allows you to exclude a particular function, variable, constructor, or destructor from being necessary in the class within the kingdom.
+
+Here's an example of how you can use these concepts:
+
+```littlebird
+kingdom script:
+Start();
+Update();
+
+script Player:
+Start() _init();
+avoid Update();
+```
+
+In this example, a kingdom named `script` is defined with two methods, `Start()` and `Update()`. A class `Player` is created within the `script` kingdom, which implements the `Start()` method and avoids the `Update()` method.
+
+```littlebird
+call script.Start(); // Calls the Start method for all classes in the script kingdom
+
+attach UpdateBotAI() to script.Update(); // When the Update method is called, it will also call UpdateBotAI
+```
+
+Here, the `Start()` method is called for all classes within the `script` kingdom. Additionally, the `UpdateBotAI()` function is attached to the `Update()` method of the `script` kingdom, so that `UpdateBotAI()` is also called whenever `script.Update()` is invoked.
+
+
 ## Namespaces
 
 Namespaces in LittleBird, commonly referred to as LiBi, are a way of grouping related code together. They help to prevent naming conflicts by providing a way to disambiguate identifiers that may be the same but belong to different namespaces.
@@ -1213,31 +1329,31 @@ This concludes our discussion on classes and objects in LittleBird. With this kn
 # Default libraries
 ## Short description
 
-- **console**: Functions for control of console
+- [**console**](#console): Functions for control of console
     
--  **system**: Low-level system functions, such as accessing environment variables, handling signals, or interacting with the operating system.
+-  [**system**](#system): Low-level system functions, such as accessing environment variables, handling signals, or interacting with the operating system.
     
--  **system.file**: Functions for file I/O, such as reading and writing files, and manipulating file paths.
+-  [**system.file**](#system.file): Functions for file I/O, such as reading and writing files, and manipulating file paths.
 
-- **math**: Basic mathematical functions and constants, such as trigonometric functions, logarithms, exponentiation, square roots, and mathematical constants like pi and e.
+- [**math**](#math): Basic mathematical functions and constants, such as trigonometric functions, logarithms, exponentiation, square roots, and mathematical constants like pi and e.
     
-- **science**: Scientific computing functions, such as linear algebra operations, statistical functions, and possibly numerical calculus functions.
+- [**science**](#science): Scientific computing functions, such as linear algebra operations, statistical functions, and possibly numerical calculus functions.
     
-- **http**: Functions for making HTTP requests, such as GET, POST, DELETE, etc.
+- [**http**](#http): Functions for making HTTP requests, such as GET, POST, DELETE, etc.
     
--  **web**: A broader web development library, possibly including functions for generating HTML, handling websockets, or server-side programming.
+-  [**web**](#web): A broader web development library, possibly including functions for generating HTML, handling websockets, or server-side programming.
 
--  **structures**: Common data structures, such as lists, stacks, queues, trees, and hash maps.
+-  [**structures**](#structures): Common data structures, such as lists, stacks, queues, trees, and hash maps.
     
--  **json**: Functions for parsing and generating JSON data.
+-  [**json**](#json): Functions for parsing and generating JSON data.
     
-- **thread**: Functions for multithreading and concurrency, such as creating and joining threads, and synchronizing access to shared resources.
+- [**thread**](#thread): Functions for multithreading and concurrency, such as creating and joining threads, and synchronizing access to shared resources.
     
--  **gui**: Functions for creating graphical user interfaces, such as windows, buttons, text inputs, and handling user interaction.
+-  [**gui**](#gui): Functions for creating graphical user interfaces, such as windows, buttons, text inputs, and handling user interaction.
     
--  **test**: Functions for writing and running tests, such as unit tests, integration tests, or property-based tests.
+-  [**test**](#test): Functions for writing and running tests, such as unit tests, integration tests, or property-based tests.
     
-- **android**: Functions for interacting with Android-specific features, such as accessing the device's sensors, creating notifications, or interacting with the Android lifecycle.
+- [**android**](#android): Functions for interacting with Android-specific features, such as accessing the device's sensors, creating notifications, or interacting with the Android lifecycle.
 - ### LogicBox libraries (game engine, currently develope)
 ##  console
     
